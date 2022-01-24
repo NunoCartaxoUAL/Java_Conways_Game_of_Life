@@ -17,8 +17,20 @@ public class WorkingCell extends Cell{
         return this.neighbors[position];
     }
 
-    public void calculateNextMoment(){
-        //TODO impletent
+    public boolean nextState(){
+        int count = 0;
+        for (Cell cell:this.neighbors) {
+            if (cell instanceof Cell){
+                if (cell.isLife()){
+                    count++;
+                }
+            }
+        }
+        if (this.isLife()){
+            return !(count<2 || count > 3);
+        }else{
+            return count==3;
+        }
     }
 
     @Override

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Java_Conways_Game_of_Life" options="--add-modules java.base" />
+      <module name="Java_Conways_Game_of_Life" options="--add-modules java.base,java.desktop" />
     </option>
   </component>
 </project>

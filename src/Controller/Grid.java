@@ -78,19 +78,19 @@ public class Grid {
 
     public void createWallCells(final int size) {
         for (int i = 1; i <size-1 ; i++) {
-            this.cells[0][i] = new WorkingCell(true);
+            this.cells[0][i] = new WorkingCell(false);
             int[] block = {1,1,1,0,0,0,0,0,0};
             this.cells[0][i].insertBlockedCells(block);
 
-            this.cells[i][0] = new WorkingCell(true);
+            this.cells[i][0] = new WorkingCell(false);
             int[] block1 = {1,0,0,1,0,0,1,0,0};
             this.cells[i][0].insertBlockedCells(block1);
 
-            this.cells[this.size-1][i] = new WorkingCell(true);
+            this.cells[this.size-1][i] = new WorkingCell(false);
             int[] block2 = {0,0,0,0,0,0,1,1,1};
             this.cells[this.size-1][i].insertBlockedCells(block2);
 
-            this.cells[i][this.size-1] = new WorkingCell(true);
+            this.cells[i][this.size-1] = new WorkingCell(false);
             int[] block3 = {0,0,1,0,0,1,0,0,1};
             this.cells[i][this.size-1].insertBlockedCells(block3);
         }
@@ -98,34 +98,56 @@ public class Grid {
     }
 
     public void createCornerCells(final int size){
-        this.cells[0][0] = new WorkingCell(true);
+        this.cells[0][0] = new WorkingCell(false);
         int[] block = {1,1,1,1,0,0,1,0,0};
         this.cells[0][0].insertBlockedCells(block);
 
-        this.cells[0][size-1] = new WorkingCell(true);
+        this.cells[0][size-1] = new WorkingCell(false);
         int[] block1 = {1,1,1,0,0,1,0,0,1};
         this.cells[0][size-1].insertBlockedCells(block1);
 
 
-        this.cells[size-1][0] = new WorkingCell(true);
+        this.cells[size-1][0] = new WorkingCell(false);
         int[] block2 = {1,0,0,1,0,0,1,1,1};
         this.cells[size-1][0].insertBlockedCells(block2);
 
 
-        this.cells[size-1][size-1] = new WorkingCell(true);
+        this.cells[size-1][size-1] = new WorkingCell(false);
         int[] block3 = {0,0,1,0,0,1,1,1,1};
         this.cells[size-1][size-1].insertBlockedCells(block3);
     }
 
     public void createMidCells(final int size){
-        for (int i = 1; i < size-1; i++) {
-            for (int j = 1; j < size-1; j++) {
-                this.cells[i][j] = new WorkingCell(true);
+        for (int i = 1; i < this.size-1; i++) {
+            for (int j = 1; j < this.size-1; j++) {
+                this.cells[i][j] = new WorkingCell(false);
             }
         }
     }
 
     public void changeCell(int px,int py) {
-        this.cells[px-1][px-1].setLife(!this.cells[px-1][px-1].isLife());
+        this.cells[px-1][py-1].setLife(!this.cells[px-1][py-1].isLife());
+    }
+
+    public void calculateNextMoment(){
+        boolean[][] nextStates = new boolean[this.size][this.size];
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                nextStates[i][j]=this.cells[i][j].nextState();
+            }
+        }
+        this.updateAll(nextStates);
+    }
+
+    public void updateAll(final boolean[][] nextStates){
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                this.cells[i][j].setLife(nextStates[i][j]);
+            }
+        }
+    }
+
+    public int getSize() {
+        return size;
     }
 }

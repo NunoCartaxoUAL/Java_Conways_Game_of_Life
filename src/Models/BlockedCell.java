@@ -17,6 +17,11 @@ public class BlockedCell extends Cell{
     }
 
     @Override
+    public boolean nextState() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Cell{" +
                 "life=" + super.isLife() +

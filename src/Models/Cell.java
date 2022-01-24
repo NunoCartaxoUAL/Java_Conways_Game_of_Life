@@ -25,4 +25,6 @@ public abstract class Cell {
 
 
     public abstract void setNeighbor(Cell cell, int i);
+
+    public abstract boolean nextState();
 }
