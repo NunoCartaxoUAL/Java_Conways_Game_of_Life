@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+class Grid{
+    -Cell[][] Cells
+    -Cell[][] getCells
+    +Void fillGrid()
+    +Void createCornerCell()
+    +Void createWallCell()
+    +Void createMidCell()
+}
+
+abstract class Cell{
+    -Boolean Life
+    +Boolean getLife()
+}
+
+class WorkingCell{
+    -Cell[] Neighbors
+    +Cell[] getNeighbors()
+    +Cell getNeighbor()
+    +Void setLife()
+    +Void calculateNextMoment()
+    }
+
+class BlockedCell{
+
+}
+Cell <|-- BlockedCell
+Cell <|-- WorkingCell
+WorkingCell o-[#000000]- WorkingCell
+WorkingCell *-[#000000]- BlockedCell
+Grid o-[#000000]- WorkingCell
+
+
+
+@enduml
