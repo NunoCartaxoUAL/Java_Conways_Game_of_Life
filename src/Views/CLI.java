@@ -6,7 +6,7 @@ import Controller.Grid;
 public class CLI {
     public CLI() {
         final Scanner scanner = new Scanner(System.in);
-        Grid grid = new Grid(4);
+        Grid grid = new Grid(3);
         while (true) {
 
             var input = scanner.nextLine();

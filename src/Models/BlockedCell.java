@@ -10,4 +10,17 @@ public class BlockedCell extends Cell{
     public void insertBlockedCells(int[] dialBlockedCells) {
 
     }
+
+    @Override
+    public void setNeighbor(Cell cell, int i) {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "life=" + super.isLife() +
+                '}';
+    }
+
 }

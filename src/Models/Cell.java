@@ -22,4 +22,7 @@ public abstract class Cell {
                 '}';
     }
     public abstract void insertBlockedCells(int[] dialBlockedCells);
+
+
+    public abstract void setNeighbor(Cell cell, int i);
 }

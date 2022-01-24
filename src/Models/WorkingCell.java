@@ -23,9 +23,19 @@ public class WorkingCell extends Cell{
 
     @Override
     public String toString() {
-        return "WorkingCell{" +
-                "neighbors=" + Arrays.toString(neighbors) +
-                '}';
+        var text = "WorkingCell_{" + "life="+super.isLife()+",";
+        var count = 0;
+
+        for (Cell cell:this.neighbors) {
+            text+="("+count+")";
+            if (cell instanceof Cell){
+                text += "neighbor"+count+" =" + cell.isLife()+" ,";
+            }
+
+            count++;
+        }
+        text += "}_";
+        return text;
     }
 
     @Override
@@ -35,5 +45,11 @@ public class WorkingCell extends Cell{
                 this.neighbors[i]= new BlockedCell();
             }
         }
+    }
+
+    @Override
+    public void setNeighbor(Cell cell, int i) {
+        this.neighbors[i] = cell;
+
     }
 }
