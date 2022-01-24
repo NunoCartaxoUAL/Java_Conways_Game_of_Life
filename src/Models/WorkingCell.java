@@ -1,14 +1,10 @@
 package Models;
 
+import java.util.Arrays;
+
 public class WorkingCell extends Cell{
-/*
--Cell[] Neighbors
-    +Cell[] getNeighbors()
-    +Cell getNeighbor()
-    +Void setLife()
-    +Void calculateNextMoment()
-*/
-    private Cell[] neighbors;
+
+    private Cell[] neighbors = new Cell[9];
 
     public WorkingCell(boolean life) {
         super(life);
@@ -23,5 +19,21 @@ public class WorkingCell extends Cell{
 
     public void calculateNextMoment(){
         //TODO impletent
+    }
+
+    @Override
+    public String toString() {
+        return "WorkingCell{" +
+                "neighbors=" + Arrays.toString(neighbors) +
+                '}';
+    }
+
+    @Override
+    public void insertBlockedCells(int[] dialBlockedCells) {
+        for (int i = 0; i < 9; i++) {
+            if (dialBlockedCells[i]==1){
+                this.neighbors[i]= new BlockedCell();
+            }
+        }
     }
 }

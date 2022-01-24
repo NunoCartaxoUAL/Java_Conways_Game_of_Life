@@ -2,7 +2,12 @@ package Models;
 
 public class BlockedCell extends Cell{
 
-    public BlockedCell(boolean life) {
-        super(life);
+    public BlockedCell() {
+        super(false);
+    }
+
+    @Override
+    public void insertBlockedCells(int[] dialBlockedCells) {
+
     }
 }

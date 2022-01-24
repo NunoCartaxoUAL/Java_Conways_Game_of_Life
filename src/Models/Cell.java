@@ -14,4 +14,12 @@ public abstract class Cell {
     public void setLife(boolean life) {
         this.life = life;
     }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "life=" + life +
+                '}';
+    }
+    public abstract void insertBlockedCells(int[] dialBlockedCells);
 }
