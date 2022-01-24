@@ -3,11 +3,28 @@ package Controller;
 import Models.Cell;
 import Models.WorkingCell;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 
-public class Grid {
+public class Grid extends JPanel{
     private Cell[][] cells;
     private int size;
+
+    @Override
+    public void paint(Graphics g) {
+        int x=10;
+        int y=10;
+        for (Cell[] cellrow :this.cells) {
+            for (Cell cell: cellrow) {
+                g.setColor((cell.isLife()?Color.GREEN:Color.GRAY));
+                g.fillRect(x,y,10,10);
+                x+=11;
+            }
+            x=10;
+            y+=11;
+        }
+    }
 
     public Grid(final int size) {
         this.size = size;
@@ -16,7 +33,7 @@ public class Grid {
         this.fill();
     }
 
-    public String show() {
+    public String showGrid() {
         String map = "";
         for (Cell[] cellrow :this.cells) {
             map += "[";
@@ -138,6 +155,15 @@ public class Grid {
         }
         this.updateAll(nextStates);
     }
+    public void calculateNextMomentTest(){
+        boolean[][] nextStates = new boolean[this.size][this.size];
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                nextStates[i][j]=this.cells[i][j].nextState();
+            }
+        }
+        this.updateAll(nextStates);
+    }
 
     public void updateAll(final boolean[][] nextStates){
         for (int i = 0; i < this.size; i++) {
@@ -147,7 +173,7 @@ public class Grid {
         }
     }
 
-    public int getSize() {
-        return size;
+    public int getGridSize() {
+        return this.size;
     }
 }

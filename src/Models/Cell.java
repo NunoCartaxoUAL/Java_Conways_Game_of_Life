@@ -1,6 +1,8 @@
 package Models;
 
-public abstract class Cell {
+import javax.swing.*;
+
+public abstract class Cell extends JPanel {
     private boolean life;
 
     public Cell(boolean life) {

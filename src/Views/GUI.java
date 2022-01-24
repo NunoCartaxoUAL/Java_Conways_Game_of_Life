@@ -1,5 +1,7 @@
 package Views;
 
+import Controller.Grid;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
@@ -8,6 +10,7 @@ import java.awt.*;
 public class GUI extends JPanel{
 
     private JFrame jf;
+    private Grid grid;
 
     public void paint(Graphics gp) //paints stuff , i dont rly know how
     {
@@ -16,14 +19,17 @@ public class GUI extends JPanel{
     }
 
     public void addCells(){
-        this.jf.getContentPane();
+        this.jf.getContentPane().add(this.grid);
     }
 
-    public GUI() {
+    public GUI(final Grid grid) {
+        this.grid = grid;
         this.jf=new JFrame(); // adds a panel or a window in JAVA SWING
         this.jf.setSize(700, 700);
-        this.jf.setTitle("Draw Chess Board");
+        this.jf.setTitle("Conway's Game of Life");
+        this.updateUI();
         this.jf.getContentPane().add(this); //adds GUI paint to the frame
+        this.addCells();
         this.jf.setLocationRelativeTo(null); //makes all positions be absolute , top left is [0;0]  bottom left is [width,height]
         this.jf.setBackground(Color.BLACK);
         this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //idk
