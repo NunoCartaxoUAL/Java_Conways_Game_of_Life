@@ -1,9 +1,13 @@
 package Views;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import Controller.Grid;
 import java.util.Random;
+import javax.swing.Timer;
 
 public class CLI {
     public CLI() {
@@ -57,14 +61,19 @@ public class CLI {
                     gui.addCells();
                     break;
                 case "TEST":
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(new TimerTask() {
-                        @Override
-                        public void run() {
+                    int delay = 100; //milliseconds
+                    ActionListener taskPerformer = new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+
                             grid.calculateNextMomentTest();
-                            System.out.println(grid.showGrid());
+                            var frame = gui.getJf();
+                            frame.invalidate();
+                            frame.validate();
+                            frame.repaint();
+
                         }
-                    }, 500, 500);
+                    };
+                    new Timer(delay, taskPerformer).start();
                     break;
                 default:
                     break;

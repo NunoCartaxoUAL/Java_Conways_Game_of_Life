@@ -27,7 +27,6 @@ public class GUI extends JPanel{
         this.jf=new JFrame(); // adds a panel or a window in JAVA SWING
         this.jf.setSize(700, 700);
         this.jf.setTitle("Conway's Game of Life");
-        this.updateUI();
         this.jf.getContentPane().add(this); //adds GUI paint to the frame
         this.addCells();
         this.jf.setLocationRelativeTo(null); //makes all positions be absolute , top left is [0;0]  bottom left is [width,height]
@@ -37,4 +36,7 @@ public class GUI extends JPanel{
     }
 
 
+    public JFrame getJf() {
+        return jf;
+    }
 }
