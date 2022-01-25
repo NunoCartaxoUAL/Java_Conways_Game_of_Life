@@ -7,13 +7,12 @@ import java.util.*;
 
 import Controller.Grid;
 import java.util.Random;
-import javax.swing.Timer;
+
 
 public class CLI {
-    public CLI() {
-        final Scanner scanner = new Scanner(System.in);
+    public CLI(Scanner scanner) {
         Grid grid = new Grid(50);
-        GUI gui = new GUI(grid);
+        //GUI gui = new GUI(grid);
         while (true) {
 
             var input = scanner.nextLine();
@@ -43,26 +42,19 @@ public class CLI {
                     grid.updateAll(newValues);;
                     break;
                 case "RANDOM":
-                    size = grid.getGridSize();
-                    Random rd = new Random(); // creating Random object
-                    boolean[][] newValues2 = new boolean[size][size];
-                    for (int i = 0; i < size; i++) {
-                        for (int j = 0; j < size; j++) {
-                            newValues2[i][j] = (rd.nextInt(2)==1);
-                        }
-                    }
-                    grid.updateAll(newValues2);
+                    grid.Randomize();
+                    System.out.println("Sucessfully randomized");
                     break;
                 case "NEXT":
                     grid.calculateNextMoment();
                     System.out.println("Next moment calculated and updated");
                     break;
                 case "GUI":
-                    gui.addCells();
+                    //gui.addCells();
                     break;
                 case "TEST":
                     //TODO REMOVE THIS FROM HERE AND MOVE TO GUI
-                    int delay = 100; //milliseconds
+                   /* int delay = 100; //milliseconds
                     ActionListener taskPerformer = new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
 
@@ -75,7 +67,7 @@ public class CLI {
                         }
                     };
                     new Timer(delay, taskPerformer).start();
-                    break;
+                    break;*/
                 default:
                     break;
             }

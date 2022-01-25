@@ -5,7 +5,7 @@ import Models.WorkingCell;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.util.Random;
 
 public class Grid extends JPanel{
     private Cell[][] cells;
@@ -15,14 +15,15 @@ public class Grid extends JPanel{
     public void paint(Graphics g) {
         int x=10;
         int y=10;
+        int width = (650-(size*2))/size;
         for (Cell[] cellrow :this.cells) {
             for (Cell cell: cellrow) {
                 g.setColor((cell.isLife()?Color.GREEN:Color.GRAY));
-                g.fillRect(x,y,10,10);
-                x+=11;
+                g.fillRect(x,y,width,width);
+                x+=width+2;
             }
             x=10;
-            y+=11;
+            y+=width+2;
         }
     }
 
@@ -155,15 +156,6 @@ public class Grid extends JPanel{
         }
         this.updateAll(nextStates);
     }
-    public void calculateNextMomentTest(){
-        boolean[][] nextStates = new boolean[this.size][this.size];
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                nextStates[i][j]=this.cells[i][j].nextState();
-            }
-        }
-        this.updateAll(nextStates);
-    }
 
     public void updateAll(final boolean[][] nextStates){
         for (int i = 0; i < this.size; i++) {
@@ -175,5 +167,17 @@ public class Grid extends JPanel{
 
     public int getGridSize() {
         return this.size;
+    }
+
+    public void Randomize() {
+        size = this.getGridSize();
+        Random rd = new Random(); // creating Random object
+        boolean[][] newValues2 = new boolean[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                newValues2[i][j] = (rd.nextInt(2)==1);
+            }
+        }
+        this.updateAll(newValues2);
     }
 }
