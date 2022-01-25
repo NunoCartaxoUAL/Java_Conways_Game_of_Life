@@ -8,15 +8,9 @@ import java.awt.*;
 
 
 public class GUI extends JPanel{
-
+    //TODO IMPLEMENTE GUI LIKE CLI
     private JFrame jf;
     private Grid grid;
-
-    public void paint(Graphics gp) //paints stuff , i dont rly know how
-    {
-        gp.fillRect(50, 50, 600, 600); //makes a big black square
-
-    }
 
     public void addCells(){
         this.jf.getContentPane().add(this.grid);

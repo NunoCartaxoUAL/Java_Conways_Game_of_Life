@@ -61,6 +61,7 @@ public class CLI {
                     gui.addCells();
                     break;
                 case "TEST":
+                    //TODO REMOVE THIS FROM HERE AND MOVE TO GUI
                     int delay = 100; //milliseconds
                     ActionListener taskPerformer = new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
