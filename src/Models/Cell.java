@@ -2,7 +2,7 @@ package Models;
 
 import javax.swing.*;
 
-public abstract class Cell extends JPanel {
+public abstract class Cell extends JButton{
     private boolean life;
 
     public Cell(boolean life) {

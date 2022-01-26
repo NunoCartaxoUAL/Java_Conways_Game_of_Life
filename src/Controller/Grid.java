@@ -13,16 +13,16 @@ public class Grid extends JPanel{
 
     @Override
     public void paint(Graphics g) {
-        int x=10;
-        int y=10;
-        int width = (650-(size*2))/size;
+        int x=150;
+        int y=200;
+        int width = (400-(size*2))/size;
         for (Cell[] cellrow :this.cells) {
             for (Cell cell: cellrow) {
                 g.setColor((cell.isLife()?Color.GREEN:Color.GRAY));
                 g.fillRect(x,y,width,width);
                 x+=width+2;
             }
-            x=10;
+            x=150;
             y+=width+2;
         }
     }
@@ -179,5 +179,9 @@ public class Grid extends JPanel{
             }
         }
         this.updateAll(newValues2);
+    }
+
+    public Cell[][] getCells() {
+        return cells;
     }
 }
