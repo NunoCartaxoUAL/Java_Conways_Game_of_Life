@@ -13,9 +13,13 @@ public class Program {
             switch (Choice) {
                 case "CLI":
                     new CLI(scanner);
+
+                    System.out.println(Choice);
                     break;
                 case "GUI":
                     new GUI();
+
+                    System.out.println(Choice);
                     break;
                 default:
                     System.out.println("invalid choice");
