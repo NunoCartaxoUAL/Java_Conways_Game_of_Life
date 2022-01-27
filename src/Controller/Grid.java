@@ -48,19 +48,6 @@ public class Grid extends JPanel{
         return map;
     }
 
-    @Override
-    public String toString() {
-        var text ="Grid{";
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                text+=" ["+this.cells[i][j].toString()+"], ";
-                text+="\n";
-            }
-            text+="\n";
-        }
-        text+="}";
-        return text;
-    }
 
     public void fill() {
         this.createCornerCells(this.size);

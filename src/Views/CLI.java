@@ -11,19 +11,19 @@ import java.util.Random;
 
 public class CLI {
     public CLI(Scanner scanner) {
-        Grid grid = new Grid(50);
-        //GUI gui = new GUI(grid);
-        while (true) {
-
+        System.out.println("Please choose the size of the grid:");
+        int gridSize = Integer.valueOf(scanner.nextLine());
+        Grid grid = new Grid(gridSize);
+        boolean run = true;
+        System.out.println("Please choose an instruction, use HELP to see all available instructions");
+        while (run) {
+            System.out.print(">");
             var input = scanner.nextLine();
             String[] commands = input.split(" ");
             switch (commands[0]) {
                 case "SHOW":
                     var show = grid.showGrid();
                     System.out.println(show);
-                    break;
-                case "PRINT":
-                    System.out.println(grid.toString());
                     break;
                 case "CHANGE":
                     int px = Integer.parseInt(commands[1]);
@@ -49,26 +49,21 @@ public class CLI {
                     grid.calculateNextMoment();
                     System.out.println("Next moment calculated and updated");
                     break;
-                case "GUI":
-                    //gui.addCells();
+                case "HELP":
+                    System.out.println(
+                                "AVAILABLE COMMANDS ARE: \n" +
+                                "SHOW : shows the state of the board \n" +
+                                "CHANGE : changes the state of a specific cell\n" +
+                                "CHANGEALL : asks for the state of each cell left to right top to bottom\n" +
+                                "RANDOM : randomizes the state of every cell in the board\n " +
+                                "NEXT : Calculates the next exact moment in the simulation\n " +
+                                "STOP : Stops the program\n "
+                    );
+                case "STOP":
+                    run=false;
                     break;
-                case "TEST":
-                    //TODO REMOVE THIS FROM HERE AND MOVE TO GUI
-                   /* int delay = 100; //milliseconds
-                    ActionListener taskPerformer = new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-
-                            grid.calculateNextMomentTest();
-                            var frame = gui.getJf();
-                            frame.invalidate();
-                            frame.validate();
-                            frame.repaint();
-
-                        }
-                    };
-                    new Timer(delay, taskPerformer).start();
-                    break;*/
                 default:
+                    System.out.println("invalid instruction");
                     break;
             }
 

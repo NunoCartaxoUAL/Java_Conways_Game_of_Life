@@ -1,6 +1,6 @@
 package Models;
 
-public class BlockedCell extends Cell{
+public class BlockedCell extends Cell{ //cell used to block of the border of the grid cells neighbor wise
 
     public BlockedCell() {
         super(false);

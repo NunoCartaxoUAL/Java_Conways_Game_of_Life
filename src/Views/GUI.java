@@ -4,57 +4,48 @@ import Controller.Grid;
 import Models.Cell;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
-    private final ActionListener taskPerformer;
-    private final SpringLayout lay2;
-    private JPanel panel1;
-    private Grid grid;
-    private JPanel panel2;
-    private JPanel panel3;
+    private final SpringLayout lyt;
+    private final int width;
+    private final int heigth;
+    private final JPanel gamePanel;
+    private final Grid grid;
+    private final JPanel mainPanel;
 
-    public GUI(){
+    public GUI(int size){
 
-        this.grid = new Grid(50);
-        this.setSize(700, 700);
+        //basic setup of the JFrame
+        this.grid = new Grid(size);
+        this.setSize(740, 800);
+        this.width =this.getSize().width;
+        this.heigth = this.getSize().height;
+        var lyt = new SpringLayout();
+        this.lyt = lyt;
         this.setTitle("Conway's Game of Life");
 
-        this.panel2 = new JPanel();
-        panel2.setBackground(Color.DARK_GRAY);
-        this.panel1 = new JPanel();
-        panel1.setBackground(Color.BLACK);
+        //basic setup of the 2 JPanels , main and game
+        this.mainPanel = new JPanel();
+        this.gamePanel = new JPanel();
+        this.setContentPane(mainPanel);
+        gamePanel.setPreferredSize(new Dimension(this.width-100, this.heigth-100));
+        mainPanel.setBackground(Color.DARK_GRAY);
+        gamePanel.setBackground(Color.BLACK);
+        gamePanel.setLayout(lyt);
+        mainPanel.setLayout(lyt);
+
+        //constraints for those panels in springs
+        lyt.putConstraint(SpringLayout.WEST,gamePanel,10,SpringLayout.WEST,mainPanel);
+        lyt.putConstraint(SpringLayout.EAST,gamePanel,-50,SpringLayout.EAST,mainPanel);
+        lyt.putConstraint(SpringLayout.NORTH,gamePanel,10,SpringLayout.NORTH,mainPanel);
 
 
-        this.setContentPane(panel2);
-
-        var layout = new SpringLayout();
-        panel2.setLayout(layout);
-        var lay2 = new SpringLayout();
-        this.lay2 = lay2;
-        panel1.setLayout(lay2);
-
-        ActionListener taskPerformer = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (((Cell) evt.getSource()).isLife()){
-                    ((Cell) evt.getSource()).setBackground(Color.GRAY);
-                    ((Cell) evt.getSource()).setLife(false);
-                }else{
-                    ((Cell) evt.getSource()).setBackground(Color.yellow);
-                    ((Cell) evt.getSource()).setLife(true);
-                }
-
-            }
-        };
-        int delay = 200; //milliseconds
-        ActionListener test1 = new ActionListener() {
+        //Various ActionListeners for the different buttons in game
+        int delay = 500; //milliseconds
+        ActionListener nextMoment = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 grid.calculateNextMoment();
                 for (Cell[] cellrow :grid.getCells()) {
@@ -70,97 +61,123 @@ public class GUI extends JFrame {
                 }
             }
         };
-        JButton button1 = new JButton();
+        //timer for the Actions that need repetition
+        var timer1 = new javax.swing.Timer(delay,nextMoment);
         ActionListener start = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                new javax.swing.Timer(delay,test1).start();
+                timer1.start();
             }
         };
-        button1.addActionListener(start);
-        button1.setPreferredSize(new Dimension(20,4));
-        panel2.add(button1);
-        this.taskPerformer = taskPerformer;
+        ActionListener stop = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                timer1.stop();
+            }
+        };
+        ActionListener rand = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                grid.Randomize();
+                for (Cell[] cellrow :grid.getCells()) {
+                    for (Cell cell : cellrow) {
+                        var test = cell;
+                        if (cell.isLife()) {
+                            cell.setBackground(Color.yellow);
+                        } else {
+                            cell.setBackground(Color.GRAY);
+                        }
 
-        layout.putConstraint(SpringLayout.WEST,panel1,20,SpringLayout.WEST,panel2);
-        layout.putConstraint(SpringLayout.NORTH,panel1,20,SpringLayout.NORTH,panel2);
-        panel1.setPreferredSize(new Dimension(400, 400));
-        System.out.println(panel1.getSize());
+                    }
+                }
+            }
+        };
+
+        //Basic setup of buttons
+        JButton startButton = new JButton();
+        startButton.setPreferredSize(new Dimension(100,20));
+        startButton.setText("Start");
+        startButton.addActionListener(start);
+        lyt.putConstraint(SpringLayout.WEST,startButton,10,SpringLayout.WEST,mainPanel);
+        lyt.putConstraint(SpringLayout.NORTH,startButton,10,SpringLayout.SOUTH,gamePanel);
+
+        JButton stopButton = new JButton();
+        stopButton.setPreferredSize(new Dimension(100,20));
+        stopButton.setText("Stop");
+        stopButton.addActionListener(stop);
+        lyt.putConstraint(SpringLayout.WEST,stopButton,110,SpringLayout.WEST,mainPanel);
+        lyt.putConstraint(SpringLayout.NORTH,stopButton,10,SpringLayout.SOUTH,gamePanel);
+
+        JButton randButton = new JButton();
+        randButton.setPreferredSize(new Dimension(100,20));
+        randButton.setText("Random");
+        randButton.addActionListener(rand);
+        lyt.putConstraint(SpringLayout.WEST,randButton,210,SpringLayout.WEST,mainPanel);
+        lyt.putConstraint(SpringLayout.NORTH,randButton,10,SpringLayout.SOUTH,gamePanel);
+
+        JButton nextButton = new JButton();
+        nextButton.setPreferredSize(new Dimension(100,20));
+        nextButton.setText("Next");
+        nextButton.addActionListener(nextMoment);
+        lyt.putConstraint(SpringLayout.WEST,nextButton,310,SpringLayout.WEST,mainPanel);
+        lyt.putConstraint(SpringLayout.NORTH,nextButton,10,SpringLayout.SOUTH,gamePanel);
+
+        //adding everything to main Panel
+        mainPanel.add(nextButton);
+        mainPanel.add(randButton);
+        mainPanel.add(startButton);
+        mainPanel.add(stopButton);
         this.addCells();
-        panel2.add(panel1);
-
+        mainPanel.add(gamePanel);
         this.setResizable(false);
-
-        this.setLocationRelativeTo(null); //makes all positions be absolute , top left is [0;0]  bottom left is [width,height]
+        this.setLocationRelativeTo(null);
         this.setBackground(Color.BLACK);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //idk
-        this.setVisible(true); // must not forget this on all elements or else the default is false (invisible)
-
-
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true); //Sets all elements to be visible
     }
 
+    //Adds all cells that extend JButton to the frame
     public void addCells(){
+
+        //Creates an ActionListener for every cell that is a button so you can turn OFF or ON a cell
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (((Cell) evt.getSource()).isLife()){
+                    ((Cell) evt.getSource()).setBackground(Color.GRAY);
+                    ((Cell) evt.getSource()).setLife(false);
+                }else{
+                    ((Cell) evt.getSource()).setBackground(Color.yellow);
+                    ((Cell) evt.getSource()).setLife(true);
+                }
+
+            }
+        };
+
+        //Rough Setup so the buttons scale with the window size,
+        //had issues with SpringLayout so its not perfect and breaks at high cell count
+
+        int cellWidth = (((this.width)-160)/(this.grid.getGridSize()));
         int x=10;
         int y=10;
-        int width = 11;
-        this.grid.Randomize();
+
         for (Cell[] cellrow :this.grid.getCells()) {
             for (Cell cell: cellrow) {
-                var test = cell;
-                test.setPreferredSize(new Dimension(10,10));
-                test.addActionListener(taskPerformer);
+
+                //for each cell in each cell row
+                //add it to the frame and do some adjustments
+                //like adding constraints or sizes
+                cell.setPreferredSize(new Dimension(cellWidth,cellWidth-1));
+                cell.addActionListener(taskPerformer);
                 if(cell.isLife()){
-                    test.setBackground(Color.yellow);
+                    cell.setBackground(Color.yellow);
                 }else{
-                    test.setBackground(Color.gray);
+                    cell.setBackground(Color.gray);
                 }
-                lay2.putConstraint(SpringLayout.WEST,test,x,SpringLayout.WEST,panel2);
-                lay2.putConstraint(SpringLayout.NORTH,test,y,SpringLayout.NORTH,panel2);
-                panel1.add(test);
-                x+=11;
+                cell.setBorder(null);
+                lyt.putConstraint(SpringLayout.WEST,cell,x,SpringLayout.WEST,mainPanel);
+                lyt.putConstraint(SpringLayout.NORTH,cell,y,SpringLayout.NORTH,mainPanel);
+                gamePanel.add(cell);
+                x+=cellWidth+1;
             }
             x=10;
-            y+=width+2;
+            y+=cellWidth;
         }
-        y=10;
-
-
-
     }
-
-
 }
-/*private JPanel panel1;
-    private Grid grid;
-    private JPanel panel2;
-
-    public void addCells(){
-        this.getContentPane().add(this.grid);
-    }
-
-    public GUI(){
-        this.grid = new Grid(22);
-        this.setSize(700,700);
-        this.setBackground(Color.black);
-        this.add(this);
-        this.add(grid);
-        this.setContentPane(panel1);
-        this.setVisible(true);
-
-        this.grid = new Grid(10);
-                this.setSize(700, 700);
-                this.setTitle("Conway's Game of Life");
-                this.panel2 = new JPanel();
-                panel2.setBackground(Color.cyan);
-
-                this.add(panel1);
-                this.add(panel2);
-
-
-                this.setLocationRelativeTo(null); //makes all positions be absolute , top left is [0;0]  bottom left is [width,height]
-                this.setBackground(Color.BLACK);
-                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //idk
-                this.setVisible(true); // must not forget this on all elements or else the default is false (invisible)
-
-                 SpringLayout lyt = new SpringLayout();
-                lyt.putConstraint(SpringLayout.WEST,button4,5,SpringLayout.WEST,pnl);
-                }*/

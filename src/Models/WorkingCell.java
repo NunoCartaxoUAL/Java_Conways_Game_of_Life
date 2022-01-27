@@ -2,7 +2,7 @@ package Models;
 
 import java.util.Arrays;
 
-public class WorkingCell extends Cell{
+public class WorkingCell extends Cell{ //cell with all methods and implementations needed to make the game of life
 
     private Cell[] neighbors = new Cell[9];
 
@@ -17,7 +17,7 @@ public class WorkingCell extends Cell{
         return this.neighbors[position];
     }
 
-    public boolean nextState(){
+    public boolean nextState(){ //calculates next state based on its neighbors
         int count = 0;
         for (Cell cell:this.neighbors) {
             if (cell instanceof Cell){
@@ -33,23 +33,14 @@ public class WorkingCell extends Cell{
         }
     }
 
-    @Override
-    public String toString() {
-        var text = "WorkingCell_{" + "life="+super.isLife()+",";
-        var count = 0;
 
-        for (Cell cell:this.neighbors) {
-            text+="("+count+")";
-            if (cell instanceof Cell){
-                text += "neighbor"+count+" =" + cell.isLife()+" ,";
-            }
-
-            count++;
-        }
-        text += "}_";
-        return text;
-    }
-
+    //inserts blocked cells with an array of ints like so:
+    // {1,1,1,1,0,0,1,0,0} would translate to
+    //  [1][1][1]
+    //  [1][x][0]
+    //  [1][0][0]
+    // meaning this would be a
+    
     @Override
     public void insertBlockedCells(int[] dialBlockedCells) {
         for (int i = 0; i < 9; i++) {
