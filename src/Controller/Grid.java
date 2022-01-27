@@ -11,22 +11,6 @@ public class Grid extends JPanel{
     private Cell[][] cells;
     private int size;
 
-    @Override
-    public void paint(Graphics g) {
-        int x=150;
-        int y=200;
-        int width = (400-(size*2))/size;
-        for (Cell[] cellrow :this.cells) {
-            for (Cell cell: cellrow) {
-                g.setColor((cell.isLife()?Color.GREEN:Color.GRAY));
-                g.fillRect(x,y,width,width);
-                x+=width+2;
-            }
-            x=150;
-            y+=width+2;
-        }
-    }
-
     public Grid(final int size) {
         this.size = size;
         Cell[][] grid = new Cell[size][size];
@@ -57,6 +41,7 @@ public class Grid extends JPanel{
     }
 
     private void addNeighborsToCells() {
+        // Adds cells to the neighbors they belong to , so the first cell would add itself to the 2second cell and the one below itself as a neighbor
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
 
@@ -81,6 +66,7 @@ public class Grid extends JPanel{
         }
     }
 
+    // creates wall cells and adds the block neighbor cells to the non corner wall cells
     public void createWallCells(final int size) {
         for (int i = 1; i <size-1 ; i++) {
             this.cells[0][i] = new WorkingCell(false);
@@ -102,6 +88,7 @@ public class Grid extends JPanel{
 
     }
 
+    // creates adds the block neighbor to corner wall cells
     public void createCornerCells(final int size){
         this.cells[0][0] = new WorkingCell(false);
         int[] block = {1,1,1,1,0,0,1,0,0};
@@ -122,6 +109,7 @@ public class Grid extends JPanel{
         this.cells[size-1][size-1].insertBlockedCells(block3);
     }
 
+    //Creates the cells in the middles
     public void createMidCells(final int size){
         for (int i = 1; i < this.size-1; i++) {
             for (int j = 1; j < this.size-1; j++) {

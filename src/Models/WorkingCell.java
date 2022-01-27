@@ -40,7 +40,7 @@ public class WorkingCell extends Cell{ //cell with all methods and implementatio
     //  [1][x][0]
     //  [1][0][0]
     // meaning this would be a
-    
+
     @Override
     public void insertBlockedCells(int[] dialBlockedCells) {
         for (int i = 0; i < 9; i++) {

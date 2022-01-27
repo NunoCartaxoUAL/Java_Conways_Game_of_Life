@@ -55,10 +55,11 @@ public class CLI {
                                 "SHOW : shows the state of the board \n" +
                                 "CHANGE : changes the state of a specific cell\n" +
                                 "CHANGEALL : asks for the state of each cell left to right top to bottom\n" +
-                                "RANDOM : randomizes the state of every cell in the board\n " +
-                                "NEXT : Calculates the next exact moment in the simulation\n " +
+                                "RANDOM : randomizes the state of every cell in the board\n" +
+                                "NEXT : Calculates the next exact moment in the simulation\n" +
                                 "STOP : Stops the program\n "
                     );
+                    break;
                 case "STOP":
                     run=false;
                     break;
