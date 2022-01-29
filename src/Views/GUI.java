@@ -44,7 +44,7 @@ public class GUI extends JFrame {
 
 
         //Various ActionListeners for the different buttons in game
-        int delay = 20; //milliseconds
+        int delay = 500; //milliseconds
         ActionListener nextMoment = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 grid.calculateNextMoment();
