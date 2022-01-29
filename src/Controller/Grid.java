@@ -2,6 +2,7 @@ package Controller;
 
 import Models.Cell;
 import Models.WorkingCell;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +45,7 @@ public class Grid extends JPanel{
         // Adds cells to the neighbors they belong to , so the first cell would add itself to the 2second cell and the one below itself as a neighbor
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-
+                System.out.println();
                 var cell = this.cells[i][j];
                 int count = 8;
                 for (int k = -1; k <=1 ; k++) {
@@ -155,7 +156,6 @@ public class Grid extends JPanel{
         }
         this.updateAll(newValues2);
     }
-
     public Cell[][] getCells() {
         return cells;
     }

@@ -44,7 +44,7 @@ public class GUI extends JFrame {
 
 
         //Various ActionListeners for the different buttons in game
-        int delay = 500; //milliseconds
+        int delay = 20; //milliseconds
         ActionListener nextMoment = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 grid.calculateNextMoment();
@@ -163,7 +163,7 @@ public class GUI extends JFrame {
                 //for each cell in each cell row
                 //add it to the frame and do some adjustments
                 //like adding constraints or sizes
-                cell.setPreferredSize(new Dimension(cellWidth,cellWidth-1));
+                cell.setPreferredSize(new Dimension(cellWidth,cellWidth));
                 cell.addActionListener(taskPerformer);
                 if(cell.isLife()){
                     cell.setBackground(Color.yellow);
@@ -177,7 +177,7 @@ public class GUI extends JFrame {
                 x+=cellWidth+1;
             }
             x=10;
-            y+=cellWidth;
+            y+=cellWidth+1;
         }
     }
 }
